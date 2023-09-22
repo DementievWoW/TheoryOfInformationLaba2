@@ -15,9 +15,9 @@ namespace TheoryOfInformationLaba2
     {
         public Form1()
         {
-
             InitializeComponent();
-            this.Size = new System.Drawing.Size(1000, 600);
+            this.AutoScroll = true;
+            this.WindowState = FormWindowState.Maximized;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -32,9 +32,14 @@ namespace TheoryOfInformationLaba2
             textboxArray[3] = textBoxT3;
             textboxArray[4] = textBoxT4;
             textboxArray[5] = textBoxT5;
+            double max = double.MinValue;
             for (int i = 0; i < K; i++)
             {
                 fArray[i] = Convert.ToDouble(textboxArray[i].Text);
+                if (fArray[i]>max)
+                {
+                    max = fArray[i];
+                }
             }
            
             double Wc = 2 * Math.PI * fc;
@@ -56,6 +61,10 @@ namespace TheoryOfInformationLaba2
                 {
                     A = Wc * (t - t0);
                     y = fArray[i-1] * (Math.Sin(A) / A);
+                    //chartArray[i - 1].Series["Graph"].Points.LegendText = $"F({i-1}";
+                    chartArray[i - 1].ChartAreas["ChartArea1"].AxisY.Interval = 1;
+                    chartArray[i - 1].ChartAreas["ChartArea1"].AxisY.Maximum = 0;
+                    chartArray[i - 1].ChartAreas["ChartArea1"].AxisY.Maximum = max+2;
                     chartArray[i-1].Series["Graph"].Points.AddXY(t, y);
                     t += h;
                 }
